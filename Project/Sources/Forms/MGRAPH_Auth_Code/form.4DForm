@@ -1,0 +1,76 @@
+{
+	"$4d": {
+		"version": "1",
+		"kind": "form"
+	},
+	"windowSizingX": "variable",
+	"windowSizingY": "variable",
+	"windowMinWidth": 0,
+	"windowMinHeight": 0,
+	"windowMaxWidth": 32767,
+	"windowMaxHeight": 32767,
+	"rightMargin": 20,
+	"bottomMargin": 20,
+	"events": [
+		"onLoad",
+		"onPageChange",
+		"onValidate",
+		"onClick",
+		"onDoubleClick",
+		"onOutsideCall",
+		"onBeginDragOver",
+		"onDragOver",
+		"onDrop",
+		"onAfterKeystroke",
+		"onMenuSelect",
+		"onPluginArea",
+		"onAfterEdit",
+		"onTimer",
+		"onBoundVariableChange"
+	],
+	"windowTitle": "window title",
+	"destination": "detailScreen",
+	"pages": [
+		{
+			"objects": {}
+		},
+		{
+			"objects": {
+				"wa_authFlow": {
+					"type": "webArea",
+					"left": 16,
+					"top": 21,
+					"width": 720,
+					"height": 720,
+					"method": "ObjectMethods/wa_authFlow.4dm",
+					"events": [
+						"onEndURLLoading",
+						"onURLLoadingError"
+					]
+				},
+				"Button": {
+					"type": "button",
+					"text": "Cancel",
+					"top": 756,
+					"left": 16,
+					"width": 89,
+					"height": 21,
+					"events": [
+						"onClick"
+					],
+					"stroke": "#ff0000",
+					"action": "cancel"
+				}
+			}
+		}
+	],
+	"method": "method.4dm",
+	"geometryStamp": 26,
+	"editor": {
+		"activeView": "View 1",
+		"defaultView": "View 1",
+		"views": {
+			"View 1": {}
+		}
+	}
+}
