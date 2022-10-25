@@ -1,4 +1,4 @@
-//%attributes = {}
+//%attributes = {"shared":true}
 
 // ----------------------------------------------------
 // User name (OS): Tom
@@ -10,12 +10,12 @@
 //
 // Parameters
 // $0 - Object - Response
-// $1 - Object - { clientId: string, queryParams?: collection, userId?: string, mailFolderId?: string } 
+// $1 - Object - { clientId?: string, authParams?: object, queryParams?: collection, userId?: string, mailFolderId?: string } 
 // ----------------------------------------------------
 
 var $0; $vo_response; $1; $vo_params : Object
 
-var $vt_endpoint; $vt_message : Text
+var $vt_endpoint : Text
 var $vc_params : Collection
 
 $vo_response:=New object:C1471
@@ -23,14 +23,21 @@ $vo_response:=New object:C1471
 If (Count parameters:C259>0)
 	$vo_params:=$1
 	
-	$vt_message:=UTIL_Check_Mandatory_Props($vo_params; New collection:C1472("clientId"; "userId"))
 	
-	If ($vt_message="")
+	If ((OB Is defined:C1231($vo_params; "clientId")) | (OB Is defined:C1231($vo_params; "authParams")))
 		
-		If (OB Is defined:C1231($vo_params; "mailFolderId"))
-			$vt_endpoint:="users/"+$vo_params.userId+"/mailFolders/"+$vo_params.mailFolderId+"/messages"
+		If (OB Is defined:C1231($vo_params; "userId"))
+			If (OB Is defined:C1231($vo_params; "mailFolderId"))
+				$vt_endpoint:="users/"+$vo_params.userId+"/mailFolders/"+$vo_params.mailFolderId+"/messages"
+			Else 
+				$vt_endpoint:="users/"+$vo_params.userId+"/messages"
+			End if 
 		Else 
-			$vt_endpoint:="users/"+$vo_params.userId+"/messages"
+			If (OB Is defined:C1231($vo_params; "mailFolderId"))
+				$vt_endpoint:="me/mailFolders/"+$vo_params.mailFolderId+"/messages"
+			Else 
+				$vt_endpoint:="me/messages"
+			End if 
 		End if 
 		
 		$vc_params:=New collection:C1472
@@ -38,11 +45,15 @@ If (Count parameters:C259>0)
 			$vc_params:=$vo_params.queryParams
 		End if 
 		
-		$vo_response:=MGRAPH_Make_Request($vo_params.clientId; $vt_endpoint; HTTP GET method:K71:1; $vc_params)
+		If (OB Is defined:C1231($vo_params; "clientId"))
+			$vo_response:=MGRAPH_Make_Request($vo_params.clientId; $vt_endpoint; HTTP GET method:K71:1; $vc_params)
+		Else 
+			$vo_response:=MGRAPH_Make_Request($vo_params.authParams; $vt_endpoint; HTTP GET method:K71:1; $vc_params)
+		End if 
 		
 	Else 
 		$vo_response.status:=0
-		$vo_response.error:=$vt_message
+		$vo_response.error:="You must provide either clientId or authParams"
 	End if 
 Else 
 	$vo_response.status:=0

@@ -19,11 +19,12 @@
 // ----------------------------------------------------
 
 var $0; $vo_response : Object
-var $1; $vt_clientId; $2; $vt_endpoint; $3; $vt_requestType : Text
+var $1; $vv_authParam : Variant
+var $2; $vt_endpoint; $3; $vt_requestType : Text
 var $4; $vc_params; $5; $vc_headers : Collection
 var $6; $v_body : Variant
 
-var $vt_url; $vt_response; $vt_param : Text
+var $vt_authType; $vt_url; $vt_response; $vt_param : Text
 var $vl_status; $vl_index : Integer
 var $vo_header; $vo_param; $vo_tokenResponse : Object
 var $vc_responseHeaders : Collection
@@ -37,7 +38,12 @@ $vc_headers:=New collection:C1472
 $v_body:=""
 
 If (Count parameters:C259>0)
-	$vt_clientId:=$1
+	$vv_authParam:=$1
+	If (Value type:C1509($1)=Is text:K8:3)
+		$vt_authType:="client"
+	Else 
+		$vt_authType:="auth"
+	End if 
 End if 
 If (Count parameters:C259>1)
 	$vt_endpoint:=$2
@@ -58,15 +64,18 @@ End if
 ARRAY TEXT:C222($at_headerName; 0)
 ARRAY TEXT:C222($at_headerValue; 0)
 
-If ($vt_clientId#"") & ($vt_endpoint#"")
+If ($vt_endpoint#"")
 	
-	$vo_tokenResponse:=MGRAPH_Get_Access_Token($vt_clientId)
+	$vo_tokenResponse:=MGRAPH_Get_Access_Token($vt_authType; $vv_authParam)
 	
 	If ($vo_tokenResponse.success)
 		
-		$vl_index:=Storage:C1525.clients.findIndex("UTIL_Find_Collection"; "clientId"; $vt_clientId)
-		
-		$vt_url:=Storage:C1525.clients[$vl_index].baseUrl+$vt_endpoint
+		If ($vt_authType="client")
+			$vl_index:=Storage:C1525.clients.findIndex("UTIL_Find_Collection"; "clientId"; $vv_authParam)
+			$vt_url:=Storage:C1525.clients[$vl_index].baseUrl+$vt_endpoint
+		Else 
+			$vt_url:=$vv_authParam.baseApiUrl+$vt_endpoint
+		End if 
 		
 		For each ($vo_param; $vc_params)
 			If ($vt_param#"")
@@ -80,7 +89,7 @@ If ($vt_clientId#"") & ($vt_endpoint#"")
 		End if 
 		
 		APPEND TO ARRAY:C911($at_headerName; "Authorization")
-		APPEND TO ARRAY:C911($at_headerValue; "Bearer "+$vo_tokenResponse.access_token)
+		APPEND TO ARRAY:C911($at_headerValue; "Bearer "+$vo_tokenResponse.authResult.token.access_token)
 		
 		For each ($vo_header; $vc_headers)
 			APPEND TO ARRAY:C911($at_headerName; $vo_header.name)
@@ -100,6 +109,9 @@ If ($vt_clientId#"") & ($vt_endpoint#"")
 		
 		$vo_response.url:=$vt_url
 		$vo_response.responseHeaders:=$vc_responseHeaders
+		If ($vt_authType="auth")
+			$vo_response.authResult:=$vo_tokenResponse.authResult
+		End if 
 		
 		If (vl_httpError#0)
 			$vo_response.status:=0

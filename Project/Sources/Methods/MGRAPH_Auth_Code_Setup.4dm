@@ -1,4 +1,4 @@
-//%attributes = {}
+//%attributes = {"shared":true}
 
 // ----------------------------------------------------
 // User name (OS): Tom
@@ -28,7 +28,7 @@ If (OB Is defined:C1231(Storage:C1525.prefs; "authorizationCodeSettings"))
 	$vo_authPrefs:=OB Copy:C1225(Storage:C1525.prefs.authorizationCodeSettings)
 	
 	//Ensure all required properties exist
-	$vt_message:=UTIL_Check_Mandatory_Props($vo_authPrefs; New collection:C1472("clientId"; "tenantId"; "scope"; "redirectUri"; "baseUrl"; "secret"))
+	$vt_message:=UTIL_Check_Mandatory_Props($vo_authPrefs; New collection:C1472("clientId"; "tenantId"; "scope"; "redirectUri"; "baseAuthUrl"; "baseApiUrl"))
 	
 	If ($vt_message="")
 		
@@ -42,7 +42,7 @@ If (OB Is defined:C1231(Storage:C1525.prefs; "authorizationCodeSettings"))
 		$vo_formData.state:=$vt_state
 		$vo_formData.redirectUri:=$vo_authPrefs.redirectUri
 		
-		$vo_formData.url:=$vo_authPrefs.baseUrl+\
+		$vo_formData.url:=$vo_authPrefs.baseAuthUrl+\
 			"?client_id="+$vo_authPrefs.clientId+\
 			"&response_type=code"+\
 			"&redirect_uri="+$vo_authPrefs.redirectUri+\

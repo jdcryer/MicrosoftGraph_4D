@@ -3,7 +3,7 @@
 
 Gets one or multiple Mail Folders.
 
-See [MS documentation](https://learn.microsoft.com/en-us/graph/api/resources/mailfolder?view=graph-rest-1.0) on the mailFolder resource for details regarding query parameters / response properties etc.
+See [Microsoft documentation](https://learn.microsoft.com/en-us/graph/api/resources/mailfolder?view=graph-rest-1.0) on the mailFolder resource for details regarding query parameters / response properties etc.
 
 ## Parameters
 
