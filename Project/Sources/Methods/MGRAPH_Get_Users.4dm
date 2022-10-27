@@ -10,7 +10,7 @@
 //
 // Parameters
 // $0 - Object - Response
-// $1 - Object - { clientId?: string, authParams?: object, queryParams: collection, userId: string } 
+// $1 - Object - { clientId?: string, authParams?: object, queryParams?: collection, userId: string } 
 // ----------------------------------------------------
 
 var $0; $vo_response; $1; $vo_params : Object
