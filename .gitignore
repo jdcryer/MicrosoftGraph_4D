@@ -1,5 +1,6 @@
 
 #exclude all user prefs
+/Data
 /userPreferences*
 /Logs
 /Settings

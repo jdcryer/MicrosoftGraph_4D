@@ -89,38 +89,46 @@ If (Count parameters:C259>1)
 		
 		$vt_url:="https://login.microsoftonline.com/"+$vo_client.tenantId+"/oauth2/v2.0/token"
 		
+		ON ERR CALL:C155("HTTP_Error")
 		$vl_status:=HTTP Request:C1158(HTTP POST method:K71:2; $vt_url; $vt_body; $vt_response; $at_headerName; $at_headerValue)
 		
 		$vo_response:=JSON Parse:C1218($vt_response)
-		If ($vl_status=200)
-			//Update storage with new token
-			$vb_tokenOK:=True:C214
-			
-			
-			$vd_date:=Current date:C33(*)
-			$vh_tempTime:=Current time:C178(*)
-			
-			//Access tokens are actually valid for 60 mins
-			$vh_newTime:=$vh_tempTime+?00:50:00?
-			If ($vh_newTime>?24:00:00?)
-				$vh_newTime:=$vh_newTime-?24:00:00?
-				$vd_date:=Add to date:C393($vd_date; 0; 0; 1)
-			End if 
-			
-			$vt_timestamp:=String:C10($vd_date; ISO date:K1:8; $vh_newTime)
-			
-			$vo_response.expiresAt:=$vt_timestamp
-			If ($vt_type="client")
-				Use (Storage:C1525.clients[$vl_index])
-					Storage:C1525.clients[$vl_index].token:=OB Copy:C1225($vo_response; ck shared:K85:29)
-				End use 
-			Else 
-				$vo_client.token:=OB Copy:C1225($vo_response)
-			End if 
-			
+		ON ERR CALL:C155("")
+		
+		If (vl_httpError#0)
+			$vo_methodResponse.status:=0
+			$vo_methodResponse.response:=New object:C1471("errorCode"; vl_httpError; "errorMessage"; vt_httpError)
 		Else 
-			$vo_methodResponse.error:="Failed to obtain new Acccess Token"
-			$vo_methodResponse.response:=$vo_response
+			If ($vl_status=200)
+				//Update storage with new token
+				$vb_tokenOK:=True:C214
+				
+				
+				$vd_date:=Current date:C33(*)
+				$vh_tempTime:=Current time:C178(*)
+				
+				//Access tokens are actually valid for 60 mins
+				$vh_newTime:=$vh_tempTime+?00:50:00?
+				If ($vh_newTime>?24:00:00?)
+					$vh_newTime:=$vh_newTime-?24:00:00?
+					$vd_date:=Add to date:C393($vd_date; 0; 0; 1)
+				End if 
+				
+				$vt_timestamp:=String:C10($vd_date; ISO date:K1:8; $vh_newTime)
+				
+				$vo_response.expiresAt:=$vt_timestamp
+				If ($vt_type="client")
+					Use (Storage:C1525.clients[$vl_index])
+						Storage:C1525.clients[$vl_index].token:=OB Copy:C1225($vo_response; ck shared:K85:29)
+					End use 
+				Else 
+					$vo_client.token:=OB Copy:C1225($vo_response)
+				End if 
+				
+			Else 
+				$vo_methodResponse.error:="Failed to obtain new Acccess Token"
+				$vo_methodResponse.response:=$vo_response
+			End if 
 		End if 
 		
 	End if 
@@ -132,7 +140,6 @@ If (Count parameters:C259>1)
 		Else 
 			$vo_methodResponse.authResult:=$vo_client
 		End if 
-		//$vo_methodResponse.access_token:=Storage.clients[$vl_index].token.access_token
 	End if 
 	
 Else 
