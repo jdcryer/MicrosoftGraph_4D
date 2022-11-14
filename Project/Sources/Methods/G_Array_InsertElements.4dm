@@ -1,4 +1,4 @@
-//%attributes = {}
+//%attributes = {"invisible":true}
 //********************************************************************************
 //* Procedure: G_Array_InsertElements
 //* Description:  inserts into all arrays listed in parameters 3 onwards

@@ -1,4 +1,4 @@
-//%attributes = {}
+//%attributes = {"invisible":true}
 //Method: CSV_PARSE_RECORD
 //Written by: J. Douglas Cryer
 //Date: 25/1/2005
