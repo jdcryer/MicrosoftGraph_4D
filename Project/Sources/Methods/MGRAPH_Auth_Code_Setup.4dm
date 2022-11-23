@@ -65,7 +65,7 @@ If (OB Is defined:C1231(Storage:C1525.prefs; "authorizationCodeSettings"))
 		$vl_WW:=$vl_width\2
 		$vl_WH:=$vl_height\2
 		
-		$vl_window:=Open window:C153($vl_SW-$vl_WW; $vl_SH-$vl_WH; $vl_SW+$vl_WW; $vl_SH+$vl_WH; Plain dialog box:K34:4; "Microsoft Authorization Code Flow")
+		$vl_window:=Open window:C153($vl_SW-$vl_WW; $vl_SH-$vl_WH; $vl_SW+$vl_WW; $vl_SH+$vl_WH; Modal dialog box:K34:2; "Microsoft Authorization Code Flow")
 		DIALOG:C40("MGRAPH_Auth_Code"; $vo_formData)
 		CLOSE WINDOW:C154($vl_window)
 		

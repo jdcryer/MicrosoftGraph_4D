@@ -19,8 +19,8 @@ var $1; $vt_type; $vt_clientId : Text
 var $2 : Variant
 
 var $vb_getToken; $vb_tokenOK; $vb_refresh : Boolean
-var $vt_body; $vt_response; $vt_timestamp; $vt_url : Text
-var $vl_index; $vl_status : Integer
+var $vt_body; $vt_response; $vt_timestamp; $vt_url; vt_httpError : Text
+var $vl_index; $vl_status; vl_httpError : Integer
 var $vd_date : Date
 var $vh_newTime; $vh_tempTime : Time
 var $vo_client; $vo_response : Object
