@@ -136,6 +136,9 @@ If ($vt_endpoint#"")
 	Else 
 		$vo_response.status:=0
 		$vo_response.error:=$vo_tokenResponse.error
+		If (OB Is defined:C1231($vo_tokenResponse; "response"))
+			$vo_response.response:=$vo_tokenResponse.response
+		End if 
 	End if 
 Else 
 	$vo_response.status:=0
