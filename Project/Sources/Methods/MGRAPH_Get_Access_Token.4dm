@@ -75,7 +75,6 @@ If (Count parameters:C259>1)
 				$vt_body:="client_id="+$vo_client.clientId+\
 					"&scope="+$vo_client.scope+\
 					"&refresh_token="+$vo_client.token.refresh_token+\
-					"&client_secret="+$vo_client.secret+\
 					"&grant_type=refresh_token"
 				
 			: ($vt_type="auth")
@@ -127,7 +126,9 @@ If (Count parameters:C259>1)
 				
 			Else 
 				$vo_methodResponse.error:="Failed to obtain new Acccess Token"
-				$vo_methodResponse.response:=$vo_response
+				$vo_methodResponse.response:=New object:C1471
+				$vo_methodResponse.response.request:=$vt_body
+				$vo_methodResponse.response.response:=$vo_response
 			End if 
 		End if 
 		
