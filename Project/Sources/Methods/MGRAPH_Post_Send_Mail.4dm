@@ -15,10 +15,13 @@
 
 var $0; $vo_response; $1; $vo_params : Object
 
-var $vt_endpoint : Text
+var $vt_endpoint; $vt_base64; $vt_message; $vt_messageId; $vt_range; $vt_uploadUrl : Text
 var $vc_headers; $vc_separateAttachments : Collection
 var $vx_attachment; $vx_streamResponse; $vx_tempBlob : Blob
-var $vo_streamResponse : Object
+var $vo_attachment; $vo_draftResponse; $vo_sendResponse; $vo_streamResponse; \
+$vo_tempAuthResult; $vo_uploadResponse : Object
+var $i; $vl_bytesToCopy; $vl_maxPacket; $vl_size; $vl_sourceOffset; $vl_status; $vl_subLength : Integer
+var $vb_break; $vb_sendMessage : Boolean
 
 $vo_response:=New object:C1471
 

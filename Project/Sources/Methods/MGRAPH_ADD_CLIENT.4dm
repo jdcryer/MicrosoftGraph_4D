@@ -16,7 +16,7 @@
 // $5 - String - Base URL
 // ----------------------------------------------------
 
-var $1; $2; $3; $4 : Text
+var $1; $2; $3; $4; $5 : Text
 var $vo_client : Object
 
 If (Count parameters:C259>3)
