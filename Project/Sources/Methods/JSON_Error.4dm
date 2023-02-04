@@ -1,4 +1,4 @@
-//%attributes = {"invisible":true}
+//%attributes = {"invisible":true,"preemptive":"capable"}
 C_LONGINT:C283(vl_jsonError)
 C_TEXT:C284(vt_jsonError)
 vl_jsonError:=Error

@@ -1,4 +1,4 @@
-//%attributes = {"invisible":true}
+//%attributes = {"invisible":true,"preemptive":"capable"}
 // ----------------------------------------------------
 // User name (OS): Dougie
 // Date and time: 07/03/18, 15:33:46

@@ -1,4 +1,4 @@
-//%attributes = {"shared":true}
+//%attributes = {"shared":true,"preemptive":"incapable"}
 
 // ----------------------------------------------------
 // User name (OS): Tom

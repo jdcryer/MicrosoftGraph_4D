@@ -1,4 +1,4 @@
-//%attributes = {"invisible":true}
+//%attributes = {"invisible":true,"preemptive":"capable"}
 C_LONGINT:C283(vl_httpError)
 C_TEXT:C284(vt_httpError)
 vl_httpError:=Error
