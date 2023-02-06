@@ -96,6 +96,12 @@ If ($vt_endpoint#"")
 			APPEND TO ARRAY:C911($at_headerValue; $vo_header.value)
 		End for each 
 		
+		//Clear process variables
+		vl_httpError:=0
+		vt_httpError:=""
+		vl_jsonError:=0
+		vt_jsonError:=""
+		
 		ON ERR CALL:C155("HTTP_Error")
 		If (Count parameters:C259>5)
 			$vl_status:=HTTP Request:C1158($vt_requestType; $vt_url; $v_body; $vt_response; $at_headerName; $at_headerValue)
@@ -111,6 +117,7 @@ If ($vt_endpoint#"")
 		$vo_response.responseHeaders:=$vc_responseHeaders
 		If ($vt_authType="auth")
 			$vo_response.authResult:=$vo_tokenResponse.authResult
+			$vo_response.tokenRefreshed:=$vo_tokenResponse.tokenRefreshed
 		End if 
 		
 		If (vl_httpError#0)

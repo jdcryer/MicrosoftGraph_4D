@@ -28,6 +28,10 @@ var $vo_client; $vo_response : Object
 $vo_methodResponse:=New object:C1471
 $vo_methodResponse.success:=False:C215
 
+//Clear process variables
+vt_httpError:=""
+vl_httpError:=0
+
 If (Count parameters:C259>1)
 	$vt_type:=$1
 	If ($vt_type="client")
@@ -96,7 +100,8 @@ If (Count parameters:C259>1)
 		
 		If (vl_httpError#0)
 			$vo_methodResponse.status:=0
-			$vo_methodResponse.response:=New object:C1471("errorCode"; vl_httpError; "errorMessage"; vt_httpError)
+			$vo_methodResponse.response:=New object:C1471("errorCode"; vl_httpError; "errorMessage"; vt_httpError; "response"; $vt_response)
+			
 		Else 
 			If ($vl_status=200)
 				//Update storage with new token
@@ -140,6 +145,7 @@ If (Count parameters:C259>1)
 			$vo_methodResponse.authResult:=OB Copy:C1225(Storage:C1525.clients[$vl_index])
 		Else 
 			$vo_methodResponse.authResult:=$vo_client
+			$vo_methodResponse.tokenRefreshed:=$vb_refresh
 		End if 
 	End if 
 	
