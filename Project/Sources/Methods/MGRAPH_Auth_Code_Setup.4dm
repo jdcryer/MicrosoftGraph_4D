@@ -56,7 +56,6 @@ If (OB Is defined:C1231(Storage:C1525.prefs; "authorizationCodeSettings"))
 			$vo_formData.url:=$vo_formData.url+"&prompt=login"
 		End if 
 		
-		
 		$vl_SW:=Screen width:C187\2
 		$vl_SH:=Screen height:C188\2
 		

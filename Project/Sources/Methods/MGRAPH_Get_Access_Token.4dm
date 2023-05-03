@@ -19,7 +19,7 @@ var $1; $vt_type; $vt_clientId : Text
 var $2 : Variant
 
 var $vb_getToken; $vb_tokenOK; $vb_refresh : Boolean
-var $vt_body; $vt_response; $vt_timestamp; $vt_url; vt_httpError : Text
+var $vt_body; $vt_response; $vt_timestamp; $vt_url; vt_httpError; $vt_timestampCompare : Text
 var $vl_index; $vl_status; vl_httpError : Integer
 var $vd_date : Date
 var $vh_newTime; $vh_tempTime : Time
@@ -49,7 +49,9 @@ If (Count parameters:C259>1)
 	//Check we have a token / is still valid
 	If (OB Is defined:C1231($vo_client; "token"))
 		
-		If (Timestamp:C1445>$vo_client.token.expiresAt)
+		$vt_timestampCompare:=String:C10(Current date:C33; ISO date:K1:8; Current time:C178)
+		
+		If ($vt_timestampCompare>$vo_client.token.expiresAt)
 			$vb_getToken:=True:C214
 			$vb_refresh:=True:C214
 		Else 
