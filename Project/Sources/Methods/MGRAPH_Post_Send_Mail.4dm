@@ -187,11 +187,11 @@ If (Count parameters:C259>0)
 						End if 
 						
 						If (OB Is defined:C1231($vo_params; "clientId"))
-							$vo_sendResponse:=MGRAPH_Make_Request($vo_params.clientId; $vt_endpoint; HTTP POST method:K71:2; New collection:C1472; $vc_headers)
+							$vo_response:=MGRAPH_Make_Request($vo_params.clientId; $vt_endpoint; HTTP POST method:K71:2; New collection:C1472; $vc_headers)
 						Else 
-							$vo_sendResponse:=MGRAPH_Make_Request($vo_tempAuthResult; $vt_endpoint; HTTP POST method:K71:2; New collection:C1472; $vc_headers)
-							If ($vo_sendResponse.status=201)
-								$vo_tempAuthResult:=$vo_sendResponse.authResult
+							$vo_response:=MGRAPH_Make_Request($vo_tempAuthResult; $vt_endpoint; HTTP POST method:K71:2; New collection:C1472; $vc_headers)
+							If ($vo_response.status=201)
+								$vo_tempAuthResult:=$vo_response.authResult
 							End if 
 						End if 
 						
